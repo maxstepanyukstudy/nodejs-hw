@@ -14,7 +14,7 @@ app.use(
       target: "pino-pretty",
       options: {
         colorize: true,
-        translateTime: "yyyy-MM-dd HH:MM:ss",
+        translateTime: "yyyy-mm-dd HH:MM:ss",
         ignore: "pid",
         hideObject: true,
         messageFormat:
