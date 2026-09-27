@@ -24,3 +24,12 @@ export async function deleteNote(req, res) {
   if (!note) throw new createHttpError(404, "Note not found");
   res.status(200).json(note);
 }
+
+export async function updateNote(req, res) {
+  const noteId = req.params.noteId;
+  const note = await Note.findByIdAndUpdate(noteId, req.body, {
+    returnDocument: "after",
+  });
+  if (!note) throw new createHttpError(404, "Note not found");
+  res.status(200).json(note);
+}
