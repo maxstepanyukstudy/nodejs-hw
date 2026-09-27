@@ -4,6 +4,7 @@ import cors from "cors";
 import dns from "node:dns";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { logger } from "./middleware/logger.js";
+import { notFoundHandler } from "./middleware/notFoundHandler.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -30,9 +31,7 @@ app.get("/test-error", () => {
   throw new Error("Simulated server error");
 });
 
-app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
+app.use(notFoundHandler);
 
 app.use((err, req, res, next) => {
   res.status(500).json({
