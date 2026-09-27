@@ -1,9 +1,9 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import pino from "pino-http";
 import dns from "node:dns";
 import { connectMongoDB } from "./db/connectMongoDB.js";
+import { logger } from "./middleware/logger.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -11,22 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(
-  pino({
-    level: "info",
-    transport: {
-      target: "pino-pretty",
-      options: {
-        colorize: true,
-        translateTime: "yyyy-mm-dd HH:MM:ss",
-        ignore: "pid",
-        hideObject: true,
-        messageFormat:
-          "{req.method} {req.url} {res.statusCode} - {responseTime}ms",
-      },
-    },
-  }),
-);
+app.use(logger);
 
 app.get("/notes", (req, res) => {
   res.status(200).json({
