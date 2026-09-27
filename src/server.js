@@ -5,6 +5,7 @@ import dns from "node:dns";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { logger } from "./middleware/logger.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -33,11 +34,7 @@ app.get("/test-error", () => {
 
 app.use(notFoundHandler);
 
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    message: err.message,
-  });
-});
+app.use(errorHandler);
 
 connectMongoDB();
 
