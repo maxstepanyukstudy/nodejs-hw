@@ -22,7 +22,7 @@ app.use(notFoundHandler);
 
 app.use(errorHandler);
 
-connectMongoDB();
+await connectMongoDB();
 
 const PORT = Number(process.env.PORT) || 3000;
 app.listen(PORT, () => {
