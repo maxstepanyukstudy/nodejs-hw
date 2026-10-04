@@ -11,7 +11,7 @@ export async function getAllNotes(req, res) {
       { content: { $regex: search, $options: "i" } },
     ],
   });
-  res.status(200).json(notes);
+  res.status(200).json({notes});
 }
 
 export async function getNoteById(req, res) {
