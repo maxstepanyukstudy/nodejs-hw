@@ -29,3 +29,14 @@ export const createNoteSchema = {
     tag: Joi.valid(...TAGS),
   }),
 };
+
+export const updateNoteSchema = {
+  [Segments.PARAMS]: Joi.object({
+    noteId: Joi.string().custom(objectIdValidator).required(),
+  }),
+  [Segments.BODY]: Joi.object({
+    title: Joi.string().min(1),
+    content: Joi.string().allow(""),
+    tag: Joi.valid(...TAGS),
+  }).min(1),
+};
