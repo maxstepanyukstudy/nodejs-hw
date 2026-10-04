@@ -3,15 +3,20 @@ import { Note } from "../models/note.js";
 
 // todo? getNotes is a better name
 export async function getAllNotes(req, res) {
-  const { search = "" } = req.query;
+  const { page = 1, perPage = 15, search = "" } = req.query;
 
-  const notes = await Note.find().where({
-    $or: [
-      { title: { $regex: search, $options: "i" } },
-      { content: { $regex: search, $options: "i" } },
-    ],
-  });
-  res.status(200).json({ notes });
+  const skip = (page - 1) * perPage;
+
+  const notes = await Note.find()
+    .skip(skip)
+    .limit(perPage)
+    .where({
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ],
+    });
+  res.status(200).json({ page, perPage, notes });
 }
 
 export async function getNoteById(req, res) {
