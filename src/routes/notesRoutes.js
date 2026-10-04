@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { celebrate } from "celebrate";
 import {
   createNote,
   deleteNote,
@@ -6,10 +7,11 @@ import {
   getNoteById,
   updateNote,
 } from "../controllers/notesController.js";
+import { getAllNotesSchema } from "../validation/noteValidation.js";
 
 const notesRouter = Router();
 
-notesRouter.get("/notes", getAllNotes);
+notesRouter.get("/notes", celebrate(getAllNotesSchema), getAllNotes);
 notesRouter.post("/notes", createNote);
 notesRouter.get("/notes/:noteId", getNoteById);
 notesRouter.delete("/notes/:noteId", deleteNote);
