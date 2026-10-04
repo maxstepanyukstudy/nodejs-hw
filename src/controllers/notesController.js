@@ -1,8 +1,16 @@
 import createHttpError from "http-errors";
 import { Note } from "../models/note.js";
 
+// todo? getNotes is a better name
 export async function getAllNotes(req, res) {
-  const notes = await Note.find();
+  const { search } = req.query;
+
+  const notes = await Note.find().where({
+    $or: [
+      { title: { $regex: search, $options: "i" } },
+      { content: { $regex: search, $options: "i" } },
+    ],
+  });
   res.status(200).json(notes);
 }
 
