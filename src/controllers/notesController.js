@@ -3,7 +3,7 @@ import { Note } from "../models/note.js";
 
 // todo? getNotes is a better name
 export async function getAllNotes(req, res) {
-  const { search } = req.query;
+  const { search = "" } = req.query;
 
   const notes = await Note.find().where({
     $or: [
@@ -11,7 +11,7 @@ export async function getAllNotes(req, res) {
       { content: { $regex: search, $options: "i" } },
     ],
   });
-  res.status(200).json({notes});
+  res.status(200).json({ notes });
 }
 
 export async function getNoteById(req, res) {
