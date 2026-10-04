@@ -6,6 +6,12 @@ export function objectIdValidator(value, helpers) {
   return isValidObjectId(value) ? value : helpers.message("Invalid id format");
 }
 
+export const noteIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    noteId: Joi.string().custom(objectIdValidator).required(),
+  }),
+};
+
 export const getAllNotesSchema = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1).default(1),
