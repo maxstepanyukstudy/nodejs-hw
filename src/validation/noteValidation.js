@@ -2,6 +2,7 @@ import { Joi, Segments } from "celebrate";
 import { TAGS } from "../constants/tags.js";
 import { isValidObjectId } from "mongoose";
 
+// todo: mv to separate file
 export function objectIdValidator(value, helpers) {
   return isValidObjectId(value) ? value : helpers.message("Invalid id format");
 }
