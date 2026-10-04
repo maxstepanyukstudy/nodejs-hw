@@ -17,7 +17,7 @@ const notesRouter = Router();
 notesRouter.get("/notes", celebrate(getAllNotesSchema), getAllNotes);
 notesRouter.post("/notes", createNote);
 notesRouter.get("/notes/:noteId", celebrate(noteIdSchema), getNoteById);
-notesRouter.delete("/notes/:noteId", deleteNote);
+notesRouter.delete("/notes/:noteId", celebrate(noteIdSchema), deleteNote);
 notesRouter.patch("/notes/:noteId", updateNote);
 
 export default notesRouter;
