@@ -8,6 +8,7 @@ import {
   updateNote,
 } from "../controllers/notesController.js";
 import {
+  createNoteSchema,
   getAllNotesSchema,
   noteIdSchema,
 } from "../validation/noteValidation.js";
@@ -15,7 +16,7 @@ import {
 const notesRouter = Router();
 
 notesRouter.get("/notes", celebrate(getAllNotesSchema), getAllNotes);
-notesRouter.post("/notes", createNote);
+notesRouter.post("/notes", celebrate(createNoteSchema), createNote);
 notesRouter.get("/notes/:noteId", celebrate(noteIdSchema), getNoteById);
 notesRouter.delete("/notes/:noteId", celebrate(noteIdSchema), deleteNote);
 notesRouter.patch("/notes/:noteId", updateNote);

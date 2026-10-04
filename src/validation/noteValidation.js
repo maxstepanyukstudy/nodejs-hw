@@ -21,3 +21,11 @@ export const getAllNotesSchema = {
     search: Joi.string().trim().allow(""),
   }),
 };
+
+export const createNoteSchema = {
+  [Segments.BODY]: Joi.object({
+    title: Joi.string().min(1).required(),
+    content: Joi.string().allow(""),
+    tag: Joi.valid(...TAGS),
+  }),
+};
