@@ -3,7 +3,7 @@ import { Note } from "../models/note.js";
 
 // todo? getNotes is a better name
 export async function getAllNotes(req, res) {
-  const { page = 1, perPage = 15, search } = req.query;
+  const { page = 1, perPage = 15, search, tag } = req.query;
 
   const skip = (page - 1) * perPage;
 
@@ -15,6 +15,9 @@ export async function getAllNotes(req, res) {
         { content: { $regex: search, $options: "i" } },
       ],
     });
+  }
+  if (tag) {
+    notesQuery.where("tag").equals(tag);
   }
   const [totalNotes, notes] = await Promise.all([
     notesQuery.clone().countDocuments(),
