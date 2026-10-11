@@ -9,6 +9,7 @@ import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import notesRouter from "./routes/notesRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import cookieParser from "cookie-parser";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -17,6 +18,8 @@ const app = express();
 app.use(logger);
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
+
 
 app.use(notesRouter);
 app.use(authRouter);
