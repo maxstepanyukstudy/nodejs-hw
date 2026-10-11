@@ -1,8 +1,6 @@
 import crypto from "crypto";
 import {
-  DAY_IN_MILLISECONDS,
   FIFTEEN_MINUTES,
-  MINUTE_IN_MILLISECONDS,
   ONE_DAY,
 } from "../constants/time.js";
 import { Session } from "../models/session.js";
@@ -15,8 +13,8 @@ export async function createSession(userId) {
     userId,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + 15 * MINUTE_IN_MILLISECONDS),
-    refreshTokenValidUntil: new Date(Date.now() + DAY_IN_MILLISECONDS),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 }
 
