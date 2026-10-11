@@ -1,0 +1,25 @@
+import bcrypt from "bcrypt";
+import { User } from "../models/user.js";
+import createHttpError from "http-errors";
+import { createSession, setSessionCookies } from "../services/auth.js";
+
+export async function registerUser(req, res) {
+  const { email, password } = req.body;
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw createHttpError(409, "Email in use");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = await User.create({
+    email,
+    password: hashedPassword,
+  });
+
+  const newSession = await createSession(newUser._id);
+  setSessionCookies(res, newSession);
+
+  res.status(201).json(newUser);
+}
