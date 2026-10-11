@@ -8,6 +8,7 @@ import { logger } from "./middleware/logger.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import notesRouter from "./routes/notesRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(notesRouter);
+app.use(authRouter);
 
 app.use(notFoundHandler);
 app.use(errors());
