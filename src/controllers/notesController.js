@@ -7,7 +7,7 @@ export async function getAllNotes(req, res) {
 
   const skip = (page - 1) * perPage;
 
-  const notesQuery = Note.find();
+  const notesQuery = Note.find({ userId: req.user._id });
   if (search) {
     notesQuery.where({
       $or: [
