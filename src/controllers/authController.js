@@ -99,10 +99,11 @@ export async function requestResetEmail(req, res) {
   const user = await User.findOne({ email });
 
   // anti user enumeration
-  if (!user)
-    throw createHttpError(200, {
-      message: "Password reset email sent successfully",
-    });
+  if (!user) {
+    return res
+      .status(200)
+      .json({ message: "Password reset email sent successfully" });
+  }
 
   const resetToken = jwt.sign(
     {
